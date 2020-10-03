@@ -49,6 +49,12 @@
         scene.add(mesh);
 
 
+        // parameter kleur, intensiteit en afstand
+        const light = new THREE.PointLight(0xFFFFF, 1, 500);
+        // light positie
+        light.position.set(10, 0, 25);
+        scene.add(light);
+
         // je moet de renderer renderen 
         renderer.render(scene, camera);
         console.log(scene);

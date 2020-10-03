@@ -39,15 +39,14 @@
 
 
 
-        // to create a sphere
-        // you have form, but also a surface 
-        // first radius wich is the size , default is 1
-        // then widthSegments
-        // then heightsegments
-        const geometry = new THREE.SphereGeometry(1, 10, 10);
+        // creating a box
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
         // a material for non shiny objects
         const material = new THREE.MeshLambertMaterial({ color: 0xFFCC00 });
         const mesh = new THREE.Mesh(geometry, material);
+        // you don''t move the object around you move the mesh 
+        mesh.position.x = 2;
+
         scene.add(mesh);
 
 

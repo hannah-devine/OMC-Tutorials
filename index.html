@@ -45,13 +45,19 @@
                 renderer.setSize(window.innerWidth,window.innerHeight);
                 // camera aspect ratio veranderen
                 camera.aspect = window.innerWidth,window.innerHeight
-
                 // update camera matrix
                 camera.updateProjectMatrix();
-
-                // je moet de renderer renderen 
-                renderer.render(scene, camera);
             })
+
+
+            // je moet de renderer renderen 
+            renderer.render(scene, camera);
+            console.log(scene);
+            // to create a sphere
+            // you have form, but also a surface 
+            // first size then ,, parameter paremt
+            const geometry = new THREE.SphereGeometry(1,10,10);
+            const material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
         </script>
     </body>
 </html>

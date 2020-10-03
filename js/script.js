@@ -3,6 +3,8 @@
     const init = () => {
 
         // here are your objects and scenes
+        // scene is een variable 
+        // THREE.Scene is een classe met bepaalde instellingen
         const scene = new THREE.Scene();
 
         // perspective camera 4 parameters => is most close to human eye
@@ -53,6 +55,7 @@
         const light = new THREE.PointLight(0xFFFFF, 1, 500);
         // light positie
         light.position.set(10, 0, 25);
+        // light toevoegen aan de scene
         scene.add(light);
 
         // je moet de renderer renderen 

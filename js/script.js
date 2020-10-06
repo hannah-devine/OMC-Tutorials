@@ -42,8 +42,9 @@
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     // a material for non shiny objects
     const material = new THREE.MeshLambertMaterial({ color: 0xFFCC00 });
-    // const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(geometry, material);
 
+    scene.add(mesh);
 
     // to not let object scale along but its not working yet
     const render = () => {
@@ -68,27 +69,25 @@
     console.log(scene);
 
 
-
-    // we are going to add a timeline to make  change mesh
-    console.log(new TimelineMax());
-
-
-    this.tl = new TimelineMax();
+    this.tl = new TimelineMax({ paused: true });
     console.log(this.tl);
     this.tl.to(this.mesh.scale, 1, { x: 2, ease: Expo.easeOut });
     this.tl.to(this.mesh.scale, 0.5, { x: 0.5, ease: Expo.easeOut });
     this.tl.to(this.mesh.position, 0.5, { x: 2, ease: Expo.easeOut });
-    this.tl.to(this.mesh.rotation, 1, { y: Math.PI * 0.5, ease: Expo.easeOut });
+    // animation happens -1.5 secon\ds ahead before it normally would
+    this.tl.to(this.mesh.rotation, 1, { y: Math.PI * 0.5, ease: Expo.easeOut }, "=-1.5");
 
 
 
-
+    document.body.addEventListener('click', () => {
+        this.tl.play();
+    })
 
     const init = () => {
         // render 1 keer oproepen om animatie te laten starten
         render();
 
-
+        window.addEventListener('mousemove', onMouseMove);
 
 
     }

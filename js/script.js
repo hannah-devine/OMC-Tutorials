@@ -37,10 +37,7 @@
     })
 
 
-    // .Raycasting is used for mouse picking(working out what objects in the 3d space the mouse is over) amongst other things.
-    let raycaster = new THREE.Raycaster();
-    // Class representing a 2D vector.
-    let mouse = new THREE.Vector2();
+
 
 
     // creating a box
@@ -48,9 +45,17 @@
     // a material for non shiny objects
     const material = new THREE.MeshLambertMaterial({ color: 0xFFCC00 });
     const mesh = new THREE.Mesh(geometry, material);
-    mesh.castShadow = true;
 
     scene.add(mesh);
+
+    // .Raycasting is used for mouse picking(working out what objects in the 3d space the mouse is over) amongst other things.
+    let raycaster = new THREE.Raycaster();
+    // Class representing a 2D vector.
+    let mouse = new THREE.Vector2();
+
+
+
+
 
     // to not let object scale along but its not working yet
     const render = () => {
@@ -63,18 +68,21 @@
 
 
     // parameter kleur, intensiteit en afstand
-    const light = new THREE.PointLight(0xFFFFF, 1, 500);
+    const light = new THREE.PointLight(0xFFFFFF, 1, 500);
     // light positie
     light.position.set(10, 0, 25);
     // light toevoegen aan de scene
     scene.add(light);
+
+
+
 
     // je moet de renderer renderen 
     console.log(camera);
     renderer.render(scene, camera);
     console.log(scene);
 
-    const mouseMoveHandler = event => {
+    function onMouseMove(event) {
         event.preventDefault();
 
         // update the picking ray with the camera and mouse position
@@ -87,9 +95,13 @@
         // console.log(intersects);
 
         for (var i = 0; i < intersects.length; i++) {
-            intersects[i].object.material.color.set(0xff0000);
-            console.log(object);
-
+            this.tl = new TimelineMax();
+            console.log(tl);
+            this.tl.to(intersects[i].object.scale, 1, { x: 2, ease: Expo.easeOut });
+            this.tl.to(intersects[i].object.scale, 0.5, { x: 0.5, ease: Expo.easeOut });
+            this.tl.to(intersects[i].object.position, 0.5, { x: 2, ease: Expo.easeOut });
+            // animation happens -1.5 secon\ds ahead before it normally would
+            this.tl.to(intersects[i].object.rotation, 1, { y: Math.PI * 0.5, ease: Expo.easeOut }, "=-1.5");
         }
 
 
@@ -100,21 +112,13 @@
     }
 
 
-    // this.tl = new TimelineMax({ paused: true });
-    // console.log(this.tl);
-    // this.tl.to(this.mesh.scale, 1, { x: 2, ease: Expo.easeOut });
-    // this.tl.to(this.mesh.scale, 0.5, { x: 0.5, ease: Expo.easeOut });
-    // this.tl.to(this.mesh.position, 0.5, { x: 2, ease: Expo.easeOut });
-    // // animation happens -1.5 secon\ds ahead before it normally would
-    // this.tl.to(this.mesh.rotation, 1, { y: Math.PI * 0.5, ease: Expo.easeOut }, "=-1.5");
-
 
 
     const init = () => {
         // render 1 keer oproepen om animatie te laten starten
         render();
-
-        window.addEventListener('mousemove', mouseMoveHandler);
+        window.addEventListener('mousemove', onMouseMove);
+        // window.addEventListener('mousemove', mouseMoveHandler);
 
 
     }

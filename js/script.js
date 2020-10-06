@@ -12,7 +12,7 @@
     // en hiermee maken we een canvas aan in ons HTML
     document.body.appendChild(renderer.domElement);
 
-    // hiermee maken we een dos
+    // hiermee maken we een doos
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     // mesh is adding material to it
@@ -22,6 +22,14 @@
     // camera staat nu op zelfde plek als de cubus dus verplaatsen we de kubus een beetje 
     camera.position.z = 5;
 
+    // we kunnen nog niks zien, we moeten eerst renderen 60fps, we renderen de scenen met de box en de camera
+    const animate = () => {
+        requestAnimationFrame(animate);
+        // roteren van de cubus door iedere 60fps .01 rotatie toe te voegen
+        cube.rotation.x += 0.01; cube.rotation.y += 0.01;
+        renderer.render(scene, camera);
+        console.log(cube.rotation.x);
+    }
 
 
 

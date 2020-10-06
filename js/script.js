@@ -32,10 +32,15 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         // camera aspect ratio veranderen
         camera.aspect = window.innerWidth, window.innerHeight
-        // update camera matrix
+        // updates the camera along wth the browser size
         camera.updateProjectionMatrix();
     })
 
+
+    // .Raycasting is used for mouse picking(working out what objects in the 3d space the mouse is over) amongst other things.
+    let raycaster = new THREE.Raycaster();
+    // Class representing a 2D vector.
+    let mouse = new THREE.Vector2();
 
 
     // creating a box
@@ -43,6 +48,7 @@
     // a material for non shiny objects
     const material = new THREE.MeshLambertMaterial({ color: 0xFFCC00 });
     const mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
 
     scene.add(mesh);
 
@@ -68,26 +74,47 @@
     renderer.render(scene, camera);
     console.log(scene);
 
+    const mouseMoveHandler = event => {
+        event.preventDefault();
 
-    this.tl = new TimelineMax({ paused: true });
-    console.log(this.tl);
-    this.tl.to(this.mesh.scale, 1, { x: 2, ease: Expo.easeOut });
-    this.tl.to(this.mesh.scale, 0.5, { x: 0.5, ease: Expo.easeOut });
-    this.tl.to(this.mesh.position, 0.5, { x: 2, ease: Expo.easeOut });
-    // animation happens -1.5 secon\ds ahead before it normally would
-    this.tl.to(this.mesh.rotation, 1, { y: Math.PI * 0.5, ease: Expo.easeOut }, "=-1.5");
+        // update the picking ray with the camera and mouse position
+        raycaster.setFromCamera(mouse, camera);
+        // console.log(raycaster);
+
+        // calculate objects intersecting the picking ray
+        // this will return an array based on objects that have been intersected with where the mouse in the scene
+        let intersects = raycaster.intersectObjects(scene.children, true);
+        // console.log(intersects);
+
+        for (var i = 0; i < intersects.length; i++) {
+            intersects[i].object.material.color.set(0xff0000);
+            console.log(object);
+
+        }
 
 
+        // how to get mouse coordinate
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
-    document.body.addEventListener('click', () => {
-        this.tl.play();
-    })
+    }
+
+
+    // this.tl = new TimelineMax({ paused: true });
+    // console.log(this.tl);
+    // this.tl.to(this.mesh.scale, 1, { x: 2, ease: Expo.easeOut });
+    // this.tl.to(this.mesh.scale, 0.5, { x: 0.5, ease: Expo.easeOut });
+    // this.tl.to(this.mesh.position, 0.5, { x: 2, ease: Expo.easeOut });
+    // // animation happens -1.5 secon\ds ahead before it normally would
+    // this.tl.to(this.mesh.rotation, 1, { y: Math.PI * 0.5, ease: Expo.easeOut }, "=-1.5");
+
+
 
     const init = () => {
         // render 1 keer oproepen om animatie te laten starten
         render();
 
-        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mousemove', mouseMoveHandler);
 
 
     }

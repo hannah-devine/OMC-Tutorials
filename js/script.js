@@ -25,8 +25,11 @@
 
 
 
-    let geometry = new THREE.ConeBufferGeometry(2, 10, 22);
-    let material = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
+
+
+    let geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+    // let material = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
+    let material = new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff });
     let cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 

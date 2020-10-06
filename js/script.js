@@ -8,13 +8,27 @@
     let renderer = new THREE.WebGLRenderer();
     // we gaan de renderer een size meegeven
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor("#e5e5e5");
     // en hiermee maken we een canvas aan in ons HTML
     document.body.appendChild(renderer.domElement);
+
+    // hiermee maken we een dos
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    // mesh is adding material to it
+    const cube = new THREE.Mesh(geometry, material);
+    // we voegen de kubus toe aan de scene
+    scene.add(cube);
+    // camera staat nu op zelfde plek als de cubus dus verplaatsen we de kubus een beetje 
+    camera.position.z = 5;
+
+
+
 
 
 
     const init = () => {
-
+        animate();
 
 
 

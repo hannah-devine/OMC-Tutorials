@@ -50,6 +50,14 @@
         scene.add(mesh);
 
 
+        // to not let object scale along but its not working yet
+        const render = () => {
+            console.log(render)
+            requestAnimationFrame(render);
+            renderer.render(scene);
+        }
+
+
         // parameter kleur, intensiteit en afstand
         const light = new THREE.PointLight(0xFFFFF, 1, 500);
         // light positie

@@ -4,7 +4,7 @@
 
     // Three.js kan niks doen zonder scene, camer en renderer.
     let scene = new THREE.Scene();
-    let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     let renderer = new THREE.WebGLRenderer();
     // we gaan de renderer een size meegeven
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -12,31 +12,36 @@
     // en hiermee maken we een canvas aan in ons HTML
     document.body.appendChild(renderer.domElement);
 
-    // hiermee maken we een doos
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    // mesh is adding material to it
-    const cube = new THREE.Mesh(geometry, material);
-    // we voegen de kubus toe aan de scene
-    scene.add(cube);
-    // camera staat nu op zelfde plek als de cubus dus verplaatsen we de kubus een beetje 
-    camera.position.z = 5;
-
-    // we kunnen nog niks zien, we moeten eerst renderen 60fps, we renderen de scenen met de box en de camera
-    const animate = () => {
-        requestAnimationFrame(animate);
-        // roteren van de cubus door iedere 60fps .01 rotatie toe te voegen
-        cube.rotation.x += 0.01; cube.rotation.y += 0.01;
-        renderer.render(scene, camera);
-        console.log(cube.rotation.x);
-    }
+    // camera op x positie 0, op y positie 0, op z positie 100
+    camera.position.set(0, 0, 100);
+    // geen idee
+    camera.lookAt(0, 0, 0);
 
 
+    // ik maak materiaal 
+    let material = new THREE.LineBasicMaterial({ color: 0x0000ff });
 
 
+    // ik maak array met punten
+    // ik duw verschillende vectorpunte erin op de x,y en z-waarden
+    let points = [];
+    points.push(new THREE.Vector3(- 20, 0, 0)); // eerst punt 
+    points.push(new THREE.Vector3(10, 10, 5)); // 2de punt
+    points.push(new THREE.Vector3(10, 0, 10)); // 3de punt
+
+    // hier set ik mijn punten
+    let geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+    // hier worden de punten aan elkaar vastgemaakt met
+    // parameter de punten, en parameter een materiaal
+    let line = new THREE.Line(geometry, material);
+
+    // toevoegen aan de scene en renderen anders zie ik nieks
+    scene.add(line);
+    renderer.render(scene, camera);
 
     const init = () => {
-        animate();
+
 
 
 

@@ -42,29 +42,14 @@
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     // a material for non shiny objects
     const material = new THREE.MeshLambertMaterial({ color: 0xFFCC00 });
-    const mesh = new THREE.Mesh(geometry, material);
-
-
-    // you don''t move the object around you move the mesh 
-    // mesh.position.x = 2;
-    // mesh.position.y = 2;
-    // mesh.position.z = -2;
-    // shorthand methode
-    mesh.position.set(2, 2, -2);
-    mesh.rotation.set(45, 0, 0);
-    mesh.scale.set(1, 2, 1);
-
-    scene.add(mesh);
+    // const mesh = new THREE.Mesh(geometry, material);
 
 
     // to not let object scale along but its not working yet
     const render = () => {
-        console.log(render)
+
         requestAnimationFrame(render);
 
-        // its adding 0.01 rotation everytime this functions renders
-        mesh.rotation.x += 0.01;
-        // mesh.scale.x += 0.1;
 
         renderer.render(scene, camera);
     }
@@ -84,9 +69,27 @@
 
 
 
+    // we are going to add a timeline to make  change mesh
+    console.log(new TimelineMax());
+
+
+    this.tl = new TimelineMax();
+    console.log(this.tl);
+    this.tl.to(this.mesh.scale, 1, { x: 2, ease: Expo.easeOut });
+    this.tl.to(this.mesh.scale, 0.5, { x: 0.5, ease: Expo.easeOut });
+    this.tl.to(this.mesh.position, 0.5, { x: 2, ease: Expo.easeOut });
+    this.tl.to(this.mesh.rotation, 1, { y: Math.PI * 0.5, ease: Expo.easeOut });
+
+
+
+
+
     const init = () => {
         // render 1 keer oproepen om animatie te laten starten
         render();
+
+
+
 
     }
 
